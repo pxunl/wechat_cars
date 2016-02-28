@@ -7,16 +7,17 @@ class Authorise(object):
         self.request = request
 
     def check_signature(self):
-        if not self.request.has_key('signatrue') or \
-           not self.request.has_key('timestamp') or \
-           not self.request.has_key('nonce'):
-            return False
+        try:
+            signature = self.request.GET.get('signature')
+            timestamp = self.request.GET.get('timestamp')
+            nonce = self.request.GET.get('nonce')
+            print signature, timestamp, nonce
+            combination_list =  [WX_TOKEN, timestamp, nonce]
+            combination_list.sort()
+            combination_str = ''.join(combination_list)
+            combination_str = hashlib.sha1(combination_str).hexdigest()
+            return combination_str == signature
+        except KeyError as e:
+            pass
 
-        signature = self.request.get('signature')
-        timestamp = self.request.get('timestamp')
-        nonce = self.request.get('nonce')
-        combination_list =  [WX_TOKEN, timestamp, nonce]
-        combination_list.sort()
-        combination_str = ''.join(combination_list)
-        combination_str = hashlib.sha1(combination_str).hexdigest()
-        return combination_str == signatrue
+        return False
