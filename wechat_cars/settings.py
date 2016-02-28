@@ -93,7 +93,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/path/to/django/debug.log',
+            'filename': '/root/wechat_cars/log/debug.log',
         },
     },
     'loggers': {
