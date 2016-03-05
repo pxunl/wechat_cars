@@ -19,5 +19,7 @@ class Authorise(object):
             return combination_str == signature
         except KeyError as e:
             pass
+		except Exception as e:
+			print e
 
         return False
